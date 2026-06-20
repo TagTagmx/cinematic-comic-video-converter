@@ -28,6 +28,7 @@ Key planning docs:
 - `planning/AI_Director_Assistant_Roadmap.md` - AI director-assistant sequence and safety boundaries.
 - `planning/AI_Director_Assistant_Roadmap_Reassessment.md` - post-T0084 AI branch reassessment and next-step recommendation.
 - `planning/AI_Director_Suggestion_Contract_Planning.md` - corrected page-understanding to AI camera suggestion contract planning.
+- `planning/AI_Camera_Suggestion_UI_Rework.md` - T0099A AI Review UI separation, responsive simplification, and browser verification note.
 - `planning/AI_Draft_Shots_Focus_Regions_Planning.md` - later AI Camera Shot / Focus Region draft suggestion planning.
 - `planning/AI_Budget_Provider_Decision_Gate_Planning.md` - provider, budget, privacy, consent, latency, and failure-handling decision gate planning before real AI integration.
 - `planning/AI_Vision_Page_Understanding_Contract_Planning.md` - provider-neutral future page-understanding response contract planning.
@@ -37,6 +38,7 @@ Key planning docs:
 - `planning/Director_Rulebook_v1_Planning.md` - T0106 shared director rulebook plan for camera motion, Draft Motion, timing, BGM, and SFX suggestions.
 - `planning/DynamicManga_Director_Rulebook_Knowledge_Pack_Planning.md` - director knowledge-pack planning for future page-understanding suggestions.
 - `planning/Practice_Fixture_Evaluation_Pass.md` - practice page set and evaluation checklist for page understanding, AI camera suggestions, and Draft Motion.
+- `planning/Browser_Draft_Motion_Audio_Notes_Practice_Verification.md` - T0112 attempted browser workflow verification report and remaining manual-run checklist.
 - `planning/Manual_Provider_Practice_Run_With_User_Selected_Pages.md` - T0111 provider-route practice results for user-selected local images.
 - `planning/Practice_Page_Provider_Evaluation_Run.md` - T0110 provider evaluation-run record and future manual run sheet.
 - `planning/Rulebook_Evaluation_Pass.md` - T0108 evaluation report comparing rulebook behavior against the practice scenarios.

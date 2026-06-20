@@ -1477,7 +1477,7 @@ export function App() {
     );
     setProjectError(null);
     setProjectMessage(
-      "Created a temporary Draft Motion suggestion. Review it in Temporary Helper Suggestions before accepting it into project data.",
+      "Created a temporary Draft Motion suggestion. Review it in Draft Motion Helpers before accepting it into project data.",
     );
   }
 
@@ -2318,13 +2318,14 @@ function AiProviderDirectorSuggestionsReview({
 
   return (
     <div className="ai-provider-director-content">
-      <div className="suggestion-seed-actions">
-        <p className="suggestions-empty">
-          Provider AI camera suggestions generated from the latest page
-          understanding. These cards are temporary review data. Creating draft
-          motion adds a temporary helper suggestion first; accepted project data
-          changes only if that draft is explicitly accepted.
-        </p>
+      <div className="ai-review-toolbar">
+        <div className="ai-review-section-intro">
+          <span className="suggestion-type is-ai-camera">Camera suggestions</span>
+          <p>
+            Camera suggestions are temporary. Create a draft before accepting
+            project changes.
+          </p>
+        </div>
         <button
           className="secondary-action"
           type="button"
@@ -2332,18 +2333,18 @@ function AiProviderDirectorSuggestionsReview({
           onClick={onGenerate}
         >
           {isGenerating
-            ? "Generating camera suggestions..."
-            : "Generate AI Camera Suggestions"}
+            ? "Generating..."
+            : "Generate Camera Suggestions"}
         </button>
-        <p className="suggestions-empty" role="status">
-          {getAiDirectorSuggestionStatus(
-            pageUnderstandingResult,
-            directorSuggestionsResult,
-            isGenerating,
-            cameraSuggestionDrafts.length,
-          )}
-        </p>
       </div>
+      <p className="suggestions-empty" role="status">
+        {getAiDirectorSuggestionStatus(
+          pageUnderstandingResult,
+          directorSuggestionsResult,
+          isGenerating,
+          cameraSuggestionDrafts.length,
+        )}
+      </p>
 
       {directorSuggestionsResult?.providerError ? (
         <p className="ai-director-warning">
@@ -2381,38 +2382,70 @@ function AiProviderDirectorSuggestionsReview({
                     ].join(" ")}
                     key={suggestion.id}
                   >
-                    <div className="ai-director-item-header">
-                      <span
-                        className={[
-                          "suggestion-type",
-                          `is-review-${suggestion.status}`,
-                        ].join(" ")}
-                      >
-                        {suggestion.status}
-                      </span>
-                      <strong>{suggestion.target.label}</strong>
+                    <div className="ai-camera-summary-row">
+                      <div className="ai-director-item-header">
+                        <span
+                          className={[
+                            "suggestion-type",
+                            "is-ai-camera",
+                            `is-review-${suggestion.status}`,
+                          ].join(" ")}
+                        >
+                          {formatAiCameraSuggestionStatusLabel(suggestion.status)}
+                        </span>
+                        <strong>{suggestion.target.label}</strong>
+                        <small>
+                          {formatMotionRoleLabel(suggestion.movementRole)} /{" "}
+                          {suggestion.timingHint} / {suggestion.confidence}
+                        </small>
+                      </div>
                     </div>
-                    <p>{suggestion.compositionHint}</p>
-                    <dl className="ai-director-metadata">
-                      <div>
-                        <dt>Target</dt>
-                        <dd>{formatCameraSuggestionTarget(suggestion.target)}</dd>
-                      </div>
-                      <div>
-                        <dt>Timing</dt>
-                        <dd>{suggestion.timingHint}</dd>
-                      </div>
-                      <div>
-                        <dt>Confidence</dt>
-                        <dd>{suggestion.confidence}</dd>
-                      </div>
-                      <div>
-                        <dt>Movement</dt>
-                        <dd>{formatMotionRoleLabel(suggestion.movementRole)}</dd>
-                      </div>
-                    </dl>
+                    <p className="ai-camera-compact-reason">
+                      {getShortReviewSentence(suggestion.compositionHint)}
+                    </p>
+                    <div className="suggestion-actions is-compact">
+                      <button
+                        className="secondary-action"
+                        type="button"
+                        disabled={
+                          suggestion.status === "blocked" ||
+                          suggestion.status === "stale" ||
+                          suggestion.status === "drafted"
+                        }
+                        onClick={() => onAcceptSuggestion(suggestion.id)}
+                      >
+                        Draft
+                      </button>
+                      <button
+                        className="timeline-move-button"
+                        type="button"
+                        disabled={suggestion.status === "rejected"}
+                        onClick={() => onRejectSuggestion(suggestion.id)}
+                      >
+                        Reject
+                      </button>
+                    </div>
                     <details className="ai-region-card-detail">
-                      <summary>Inspect / edit suggestion</summary>
+                      <summary>Inspect</summary>
+                      <dl className="ai-director-metadata is-compact">
+                        <div>
+                          <dt>Target</dt>
+                          <dd>{formatCameraSuggestionTarget(suggestion.target)}</dd>
+                        </div>
+                        <div>
+                          <dt>Timing</dt>
+                          <dd>{suggestion.timingHint}</dd>
+                        </div>
+                        <div>
+                          <dt>Confidence</dt>
+                          <dd>{suggestion.confidence}</dd>
+                        </div>
+                        <div>
+                          <dt>Movement</dt>
+                          <dd>{formatMotionRoleLabel(suggestion.movementRole)}</dd>
+                        </div>
+                      </dl>
+                      <p>{suggestion.reason}</p>
                       <div className="ai-camera-target-list">
                         <strong>Target references</strong>
                         <button
@@ -2420,7 +2453,7 @@ function AiProviderDirectorSuggestionsReview({
                           type="button"
                           onClick={() => onInspectTarget(suggestion.target)}
                         >
-                          Inspect {suggestion.target.label}
+                          Highlight
                         </button>
                         {suggestion.supportingTargets.length > 0 ? (
                           <ul>
@@ -2508,28 +2541,6 @@ function AiProviderDirectorSuggestionsReview({
                         was not changed.
                       </p>
                     ) : null}
-                    <div className="suggestion-actions">
-                      <button
-                        className="secondary-action"
-                        type="button"
-                        disabled={
-                          suggestion.status === "blocked" ||
-                          suggestion.status === "stale" ||
-                          suggestion.status === "drafted"
-                        }
-                        onClick={() => onAcceptSuggestion(suggestion.id)}
-                      >
-                        Create Draft Motion
-                      </button>
-                      <button
-                        className="timeline-move-button"
-                        type="button"
-                        disabled={suggestion.status === "rejected"}
-                        onClick={() => onRejectSuggestion(suggestion.id)}
-                      >
-                        Reject
-                      </button>
-                    </div>
                   </li>
                 ))}
               </ul>
@@ -3263,6 +3274,163 @@ function SuggestionsPanel({
   onAcceptSuggestion: (suggestionId: string) => void;
   onRejectSuggestion: (suggestionId: string) => void;
 }) {
+  const draftMotionSuggestions = suggestions.filter(
+    (suggestion) => suggestion.type === "draftMotion",
+  );
+  const otherHelperSuggestions = suggestions.filter(
+    (suggestion) => suggestion.type !== "draftMotion",
+  );
+  const pageUnderstandingEvidenceCount = aiPageUnderstandingResult?.analysis
+    ? aiPageUnderstandingResult.analysis.panels.length +
+      aiPageUnderstandingResult.analysis.characterRegions.length +
+      aiPageUnderstandingResult.analysis.speechRegions.length +
+      aiPageUnderstandingResult.analysis.detailRegions.length +
+      aiPageUnderstandingResult.analysis.actionRegions.length
+    : 0;
+  const activeAudioNoteCount = aiAudioSuggestionNotes.filter(
+    (note) => note.status !== "rejected",
+  ).length;
+
+  const renderTemporarySuggestion = (
+    suggestion: TemporarySuggestion,
+    options?: { draftMotion?: boolean },
+  ) => (
+    <li
+      className={[
+        "suggestion-item",
+        options?.draftMotion ? "is-draft-motion" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      key={suggestion.id}
+    >
+      <div className="suggestion-item-main">
+        <span
+          className={[
+            "suggestion-type",
+            options?.draftMotion ? "is-draft-motion" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {formatSuggestionType(suggestion.type)}
+        </span>
+        <strong>{getSuggestionTitle(suggestion, cameraShots)}</strong>
+        <small>
+          {suggestion.source} | confidence {suggestion.confidence}
+        </small>
+        <p>{suggestion.reason}</p>
+        {suggestion.type === "draftMotion" ? (
+          <div className="ai-camera-target-list">
+            <dl className="suggestion-geometry">
+              <div>
+                <dt>Shot</dt>
+                <dd>{suggestion.proposedValues.cameraShot.label}</dd>
+              </div>
+              <div>
+                <dt>Focus Regions</dt>
+                <dd>{suggestion.proposedValues.focusRegions.length}</dd>
+              </div>
+              <div>
+                <dt>Path Items</dt>
+                <dd>{suggestion.proposedValues.pathItems.length}</dd>
+              </div>
+              <div>
+                <dt>Duration</dt>
+                <dd>{suggestion.proposedValues.cameraShot.durationMs}ms</dd>
+              </div>
+            </dl>
+            <details className="ai-region-card-detail">
+              <summary>Inspect draft objects</summary>
+              <ol className="suggestion-path-list">
+                {suggestion.proposedValues.pathItems.map((pathItem) => {
+                  const draftFocusRegion =
+                    suggestion.proposedValues.focusRegions.find(
+                      (region) =>
+                        region.draftFocusRegionId === pathItem.focusRegionId,
+                    );
+
+                  return (
+                    <li key={pathItem.focusRegionId}>
+                      <strong>
+                        {draftFocusRegion
+                          ? `${draftFocusRegion.label} (${draftFocusRegion.kind})`
+                          : `Missing draft focus ${pathItem.focusRegionId}`}
+                      </strong>
+                      <span>
+                        {formatMotionRoleLabel(pathItem.motionRole)} / weight{" "}
+                        {pathItem.durationWeight}
+                      </span>
+                      <small>{pathItem.reason}</small>
+                    </li>
+                  );
+                })}
+              </ol>
+            </details>
+          </div>
+        ) : suggestion.type === "shotAttentionPath" ? (
+          <ol className="suggestion-path-list">
+            {getSuggestionDraftPathItems(suggestion).map((pathItem) => {
+              const focusRegion = focusRegions.find(
+                (region) => region.id === pathItem.focusRegionId,
+              );
+
+              return (
+                <li key={pathItem.focusRegionId}>
+                  <strong>
+                    {focusRegion
+                      ? `${focusRegion.label} (${focusRegion.kind})`
+                      : `Missing focus region ${pathItem.focusRegionId}`}
+                  </strong>
+                  <span>
+                    {formatMotionRoleLabel(pathItem.motionRole)} / weight{" "}
+                    {pathItem.durationWeight}
+                  </span>
+                  <small>{pathItem.reason}</small>
+                </li>
+              );
+            })}
+          </ol>
+        ) : (
+          <dl className="suggestion-geometry">
+            <div>
+              <dt>X</dt>
+              <dd>{suggestion.proposedValues.x}px</dd>
+            </div>
+            <div>
+              <dt>Y</dt>
+              <dd>{suggestion.proposedValues.y}px</dd>
+            </div>
+            <div>
+              <dt>W</dt>
+              <dd>{suggestion.proposedValues.width}px</dd>
+            </div>
+            <div>
+              <dt>H</dt>
+              <dd>{suggestion.proposedValues.height}px</dd>
+            </div>
+          </dl>
+        )}
+      </div>
+      <div className="suggestion-actions">
+        <button
+          className="secondary-action"
+          type="button"
+          onClick={() => onAcceptSuggestion(suggestion.id)}
+        >
+          {options?.draftMotion ? "Accept Draft" : "Accept"}
+        </button>
+        <button
+          className="timeline-move-button"
+          type="button"
+          onClick={() => onRejectSuggestion(suggestion.id)}
+        >
+          {options?.draftMotion ? "Reject Draft" : "Reject"}
+        </button>
+      </div>
+    </li>
+  );
+
   return (
     <section className="panel suggestions-panel">
       <div className="panel-heading">
@@ -3290,25 +3458,53 @@ function SuggestionsPanel({
             )}
           </p>
         </div>
-        <AiPageUnderstandingReview
-          result={aiPageUnderstandingResult}
-          activeRegionId={activeAiPageRegionId}
-          selectedRegionId={selectedAiPageRegionId}
-          onHoverRegion={onHoverAiPageRegion}
-          onSelectRegion={onSelectAiPageRegion}
-          detailHighlights={detailHighlights}
-          selectedDetailHighlightId={selectedDetailHighlightId}
-          image={image}
-          hiddenAiDetailFingerprints={hiddenAiDetailFingerprints}
-          onAcceptAiDetail={onAcceptAiDetail}
-          onRejectAiDetail={onRejectAiDetail}
-          onSelectDetailHighlight={onSelectDetailHighlight}
-          onChangeDetailHighlight={onChangeDetailHighlight}
-          onDeleteDetailHighlight={onDeleteDetailHighlight}
-        />
+        <div className="ai-review-workflow-tabs" aria-label="AI review workflow">
+          <span>
+            <strong>Evidence</strong>
+            <small>{pageUnderstandingEvidenceCount}</small>
+          </span>
+          <span>
+            <strong>Camera</strong>
+            <small>{aiCameraSuggestionDrafts.length}</small>
+          </span>
+          <span>
+            <strong>Drafts</strong>
+            <small>{draftMotionSuggestions.length}</small>
+          </span>
+          <span>
+            <strong>Audio</strong>
+            <small>{activeAudioNoteCount}</small>
+          </span>
+        </div>
 
         <details className="ai-review-section" open>
-          <summary>AI Camera Suggestions</summary>
+          <summary>
+            <span>Evidence</span>
+            <small>raw AI</small>
+          </summary>
+          <AiPageUnderstandingReview
+            result={aiPageUnderstandingResult}
+            activeRegionId={activeAiPageRegionId}
+            selectedRegionId={selectedAiPageRegionId}
+            onHoverRegion={onHoverAiPageRegion}
+            onSelectRegion={onSelectAiPageRegion}
+            detailHighlights={detailHighlights}
+            selectedDetailHighlightId={selectedDetailHighlightId}
+            image={image}
+            hiddenAiDetailFingerprints={hiddenAiDetailFingerprints}
+            onAcceptAiDetail={onAcceptAiDetail}
+            onRejectAiDetail={onRejectAiDetail}
+            onSelectDetailHighlight={onSelectDetailHighlight}
+            onChangeDetailHighlight={onChangeDetailHighlight}
+            onDeleteDetailHighlight={onDeleteDetailHighlight}
+          />
+        </details>
+
+        <details className="ai-review-section" open>
+          <summary>
+            <span>Camera</span>
+            <small>{aiCameraSuggestionDrafts.length} temporary</small>
+          </summary>
           <AiProviderDirectorSuggestionsReview
             pageUnderstandingResult={aiPageUnderstandingResult}
             directorSuggestionsResult={aiDirectorSuggestionsResult}
@@ -3322,8 +3518,28 @@ function SuggestionsPanel({
           />
         </details>
 
+        {draftMotionSuggestions.length > 0 ? (
+          <details className="ai-review-section ai-draft-motion-section" open>
+            <summary>
+              <span>Drafts</span>
+              <small>{draftMotionSuggestions.length} temporary</small>
+            </summary>
+            <p className="suggestions-empty">
+              Drafts are temporary. Project data changes only after Accept Draft.
+            </p>
+            <ul className="suggestion-list is-draft-motion-list">
+              {draftMotionSuggestions.map((suggestion) =>
+                renderTemporarySuggestion(suggestion, { draftMotion: true }),
+              )}
+            </ul>
+          </details>
+        ) : null}
+
         <details className="ai-review-section">
-          <summary>Audio Notes</summary>
+          <summary>
+            <span>Audio</span>
+            <small>read-only advice</small>
+          </summary>
           <AiAudioSuggestionNotesReview
             notes={aiAudioSuggestionNotes}
             cameraShots={cameraShots}
@@ -3335,7 +3551,10 @@ function SuggestionsPanel({
         </details>
 
         <details className="ai-review-section">
-          <summary>Director Notes</summary>
+          <summary>
+            <span>Director Notes</span>
+            <small>accepted-data hints</small>
+          </summary>
           <AiDirectorSuggestionsReview
             image={image}
             selectedShot={selectedShot}
@@ -3346,7 +3565,10 @@ function SuggestionsPanel({
         </details>
 
         <details className="ai-review-section">
-          <summary>Helper Drafts</summary>
+          <summary>
+            <span>Manual Helper Drafts</span>
+            <small>local helper</small>
+          </summary>
           <div className="suggestion-seed-actions">
             <p className="suggestions-empty">
               Manual helper. This drafts a temporary attention path from
@@ -3370,135 +3592,16 @@ function SuggestionsPanel({
           </div>
         </details>
 
-        {suggestions.length > 0 ? (
+        {otherHelperSuggestions.length > 0 ? (
           <details className="ai-review-section">
-            <summary>Temporary Helper Suggestions ({suggestions.length})</summary>
+            <summary>
+              <span>Other Temporary Suggestions</span>
+              <small>{otherHelperSuggestions.length} helpers</small>
+            </summary>
             <ul className="suggestion-list">
-            {suggestions.map((suggestion) => (
-              <li className="suggestion-item" key={suggestion.id}>
-                <div className="suggestion-item-main">
-                  <span className="suggestion-type">
-                    {formatSuggestionType(suggestion.type)}
-                  </span>
-                  <strong>
-                    {getSuggestionTitle(suggestion, cameraShots)}
-                  </strong>
-                  <small>
-                    {suggestion.source} | confidence {suggestion.confidence}
-                  </small>
-                  <p>{suggestion.reason}</p>
-                  {suggestion.type === "draftMotion" ? (
-                    <div className="ai-camera-target-list">
-                      <dl className="suggestion-geometry">
-                        <div>
-                          <dt>Shot</dt>
-                          <dd>{suggestion.proposedValues.cameraShot.label}</dd>
-                        </div>
-                        <div>
-                          <dt>Focus Regions</dt>
-                          <dd>{suggestion.proposedValues.focusRegions.length}</dd>
-                        </div>
-                        <div>
-                          <dt>Path Items</dt>
-                          <dd>{suggestion.proposedValues.pathItems.length}</dd>
-                        </div>
-                        <div>
-                          <dt>Duration</dt>
-                          <dd>
-                            {suggestion.proposedValues.cameraShot.durationMs}ms
-                          </dd>
-                        </div>
-                      </dl>
-                      <ol className="suggestion-path-list">
-                        {suggestion.proposedValues.pathItems.map((pathItem) => {
-                          const draftFocusRegion =
-                            suggestion.proposedValues.focusRegions.find(
-                              (region) =>
-                                region.draftFocusRegionId ===
-                                pathItem.focusRegionId,
-                            );
-
-                          return (
-                            <li key={pathItem.focusRegionId}>
-                              <strong>
-                                {draftFocusRegion
-                                  ? `${draftFocusRegion.label} (${draftFocusRegion.kind})`
-                                  : `Missing draft focus ${pathItem.focusRegionId}`}
-                              </strong>
-                              <span>
-                                {formatMotionRoleLabel(pathItem.motionRole)} /
-                                weight {pathItem.durationWeight}
-                              </span>
-                              <small>{pathItem.reason}</small>
-                            </li>
-                          );
-                        })}
-                      </ol>
-                    </div>
-                  ) : suggestion.type === "shotAttentionPath" ? (
-                    <ol className="suggestion-path-list">
-                      {getSuggestionDraftPathItems(suggestion).map(
-                        (pathItem) => {
-                          const focusRegion = focusRegions.find(
-                            (region) => region.id === pathItem.focusRegionId,
-                          );
-
-                          return (
-                            <li key={pathItem.focusRegionId}>
-                              <strong>
-                                {focusRegion
-                                  ? `${focusRegion.label} (${focusRegion.kind})`
-                                  : `Missing focus region ${pathItem.focusRegionId}`}
-                              </strong>
-                              <span>
-                                {formatMotionRoleLabel(pathItem.motionRole)} /
-                                weight {pathItem.durationWeight}
-                              </span>
-                              <small>{pathItem.reason}</small>
-                            </li>
-                          );
-                        },
-                      )}
-                    </ol>
-                  ) : (
-                    <dl className="suggestion-geometry">
-                      <div>
-                        <dt>X</dt>
-                        <dd>{suggestion.proposedValues.x}px</dd>
-                      </div>
-                      <div>
-                        <dt>Y</dt>
-                        <dd>{suggestion.proposedValues.y}px</dd>
-                      </div>
-                      <div>
-                        <dt>W</dt>
-                        <dd>{suggestion.proposedValues.width}px</dd>
-                      </div>
-                      <div>
-                        <dt>H</dt>
-                        <dd>{suggestion.proposedValues.height}px</dd>
-                      </div>
-                    </dl>
-                  )}
-                </div>
-                <div className="suggestion-actions">
-                  <button
-                    className="secondary-action"
-                    type="button"
-                    onClick={() => onAcceptSuggestion(suggestion.id)}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="timeline-move-button"
-                    type="button"
-                    onClick={() => onRejectSuggestion(suggestion.id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              </li>
-            ))}
+              {otherHelperSuggestions.map((suggestion) =>
+                renderTemporarySuggestion(suggestion),
+              )}
             </ul>
           </details>
         ) : null}
@@ -3540,7 +3643,18 @@ function getAiReviewStatus(
     analysis.warnings.length + (result.validationWarnings?.length ?? 0);
   const staleLabel = result.isStale ? "stale, " : "";
 
-  return `Latest analysis: ${staleLabel}${analysis.mood.label} mood, ${analysis.panels.length} panels, ${regionCount} regions, ${warningCount} warnings.`;
+  return `Latest: ${staleLabel}${analysis.panels.length} panels · ${regionCount} regions · ${warningCount} warnings`;
+}
+
+function getShortReviewSentence(text: string) {
+  const trimmed = text.trim();
+  const sentenceMatch = trimmed.match(/^(.{1,120}?[.!?])(\s|$)/);
+
+  if (sentenceMatch) {
+    return sentenceMatch[1];
+  }
+
+  return trimmed.length > 120 ? `${trimmed.slice(0, 117).trim()}...` : trimmed;
 }
 
 function getAiDirectorSuggestionStatus(
@@ -3623,36 +3737,22 @@ function createAiAudioSuggestionNotes({
     kind: "bgmTone",
     target: { type: "project", label: "Whole project" },
     timing: "project-wide",
-    suggestion: getBgmToneSuggestion(projectPurposeSummary),
-    searchTerms: getBgmToneSearchTerms(projectPurposeSummary),
+    suggestion: getPageBgmSuggestion(projectPurposeSummary, cameraShots),
+    searchTerms: getPageBgmSearchTerms(projectPurposeSummary),
     reason:
-      `${DIRECTOR_RULEBOOK_SOURCE_LABEL}: BGM follows page/sequence mood, not every detected panel. Derived from accepted Camera Shot purposes and pacing. Use these terms only in a licensed or user-owned audio library.`,
+      `${DIRECTOR_RULEBOOK_SOURCE_LABEL}: suggest one page-level BGM direction from the whole accepted shot sequence instead of scoring every panel separately. Use these terms only in a licensed or user-owned audio library.`,
     confidence: "medium",
     warnings: backgroundAudio
       ? [
           `Existing background audio is ${backgroundAudio.fileName}; compare any new idea manually before replacing it.`,
         ]
-      : ["No background audio is loaded; this is a search note only."],
+      : [
+          "No background audio is loaded; this is a search note only.",
+          "Keep BGM simple and let the camera path carry panel-to-panel timing.",
+        ],
     status: "new",
     createdAt,
   });
-
-  if (cameraShots.length > 1) {
-    notes.push({
-      id: createAiAudioSuggestionId(noteNumber++),
-      kind: "bgmPacing",
-      target: { type: "project", label: "Whole project" },
-      timing: "project-wide",
-      suggestion: getBgmPacingSuggestion(cameraShots),
-      searchTerms: getBgmPacingSearchTerms(cameraShots),
-      reason:
-        `${DIRECTOR_RULEBOOK_SOURCE_LABEL}: audio pacing supports accepted camera beats instead of creating new story beats. Based on accepted shot count, durations, and the need to preserve readable camera timing.`,
-      confidence: "medium",
-      warnings: ["Keep music restrained under speech-heavy or gag-timing shots."],
-      status: "new",
-      createdAt,
-    });
-  }
 
   const pathCueNotes = createAiAudioPathCueNotes(
     cameraShots,
@@ -3783,15 +3883,11 @@ function isPathItemUsefulForAudioCue(
     return true;
   }
 
-  if (focusRegion.kind === "action" || shot.shotPurpose === "action") {
-    return true;
-  }
-
-  if (focusRegion.kind === "detail" && pathItem.motionRole === "pushIn") {
-    return true;
-  }
-
-  if (focusRegion.kind === "face" && shot.shotPurpose === "reaction") {
+  if (
+    focusRegion.kind === "action" &&
+    shot.shotPurpose === "action" &&
+    (pathItem.motionRole === "pushIn" || pathItem.motionRole === "pushOut")
+  ) {
     return true;
   }
 
@@ -3828,14 +3924,10 @@ function getSfxCueSuggestion(
   }
 
   if (focusRegion.kind === "action" || shot.shotPurpose === "action") {
-    return `Consider a brief movement accent for ${focusRegion.label}.`;
+    return `Consider one brief action-impact accent for ${focusRegion.label}.`;
   }
 
-  if (focusRegion.kind === "detail") {
-    return `Consider a subtle inspection or reveal accent for ${focusRegion.label}.`;
-  }
-
-  return `Consider a soft reaction accent for ${focusRegion.label}.`;
+  return `Consider one restrained cue for ${focusRegion.label} only if the beat feels tense or impactful.`;
 }
 
 function getSfxSearchTerms(
@@ -3852,14 +3944,10 @@ function getSfxSearchTerms(
   }
 
   if (focusRegion.kind === "action" || shot.shotPurpose === "action") {
-    return ["quick whoosh", "movement accent", "action swish"];
+    return ["short impact accent", "comic action hit", "quick tense whoosh"];
   }
 
-  if (focusRegion.kind === "detail") {
-    return ["subtle reveal accent", "small object detail", "soft inspection ping"];
-  }
-
-  return ["soft reaction accent", "small comedic sting", "gentle emphasis"];
+  return ["restrained tension hit", "short cue accent", "soft impact accent"];
 }
 
 function getSfxCueReason(
@@ -3871,7 +3959,7 @@ function getSfxCueReason(
     ? formatAudioMotionRoleLabel(pathItem.motionRole)
     : "motion";
 
-  return `${DIRECTOR_RULEBOOK_SOURCE_LABEL}: SFX supports visible accepted camera beats only. ${shot.label} uses ${motionLabel} toward accepted ${focusRegion.kind} Focus Region "${focusRegion.label}", so the note is tied to an accepted visual beat.`;
+  return `${DIRECTOR_RULEBOOK_SOURCE_LABEL}: SFX should be sparse. ${shot.label} uses ${motionLabel} toward accepted ${focusRegion.kind} Focus Region "${focusRegion.label}", and this cue is limited to explicit effect cues or strong action-impact beats rather than soft movement or ordinary character entrances.`;
 }
 
 function formatAudioMotionRoleLabel(motionRole: ShotAttentionPathItem["motionRole"]) {
@@ -3894,29 +3982,40 @@ function summarizeShotPurposes(cameraShots: CameraShot[]) {
   };
 }
 
-function getBgmToneSuggestion(summary: ReturnType<typeof summarizeShotPurposes>) {
+function getPageBgmSuggestion(
+  summary: ReturnType<typeof summarizeShotPurposes>,
+  cameraShots: CameraShot[],
+) {
   if (summary.hasAction) {
-    return "Use a light action pulse that supports movement without overpowering panel reading.";
+    return "Use one restrained light-action bed for the page, keeping transients low so panel reading stays clear.";
   }
 
   if (summary.hasEmotion) {
-    return "Use a restrained emotional bed with room for reaction holds.";
+    return "Use one soft emotional underscore for the page, with enough space for reaction holds.";
   }
 
   if (summary.hasDialogue) {
-    return "Use quiet ambience or a sparse comedy bed that leaves speech readable.";
+    return "Use one soft, peaceful daily-life BGM bed for the whole page; keep it gentle under dialogue and gag timing.";
   }
 
   if (summary.hasReveal || summary.hasEstablishing) {
-    return "Use low ambience that can widen for reveal or establishing context.";
+    return "Use one calm ambient bed for the page, with a subtle sense of space for reveal or establishing context.";
   }
 
-  return "Use a neutral light bed that stays under the guided-view camera movement.";
+  const averageDuration =
+    cameraShots.reduce((sum, shot) => sum + shot.durationMs, 0) /
+    Math.max(1, cameraShots.length);
+
+  if (averageDuration > 4000) {
+    return "Use one slow, simple underscore for the whole page so longer camera beats can breathe.";
+  }
+
+  return "Use one neutral soft comic bed for the whole page, staying under the guided-view camera movement.";
 }
 
-function getBgmToneSearchTerms(summary: ReturnType<typeof summarizeShotPurposes>) {
+function getPageBgmSearchTerms(summary: ReturnType<typeof summarizeShotPurposes>) {
   if (summary.hasAction) {
-    return ["light action pulse", "restrained percussion bed", "comic chase rhythm"];
+    return ["restrained light action bed", "low percussion underscore", "comic tension loop"];
   }
 
   if (summary.hasEmotion) {
@@ -3924,7 +4023,7 @@ function getBgmToneSearchTerms(summary: ReturnType<typeof summarizeShotPurposes>
   }
 
   if (summary.hasDialogue) {
-    return ["quiet room tone", "light comedy bed", "minimal dialogue underscore"];
+    return ["soft peaceful comic bgm", "gentle daily life loop", "light family comedy bed"];
   }
 
   if (summary.hasReveal || summary.hasEstablishing) {
@@ -3932,34 +4031,6 @@ function getBgmToneSearchTerms(summary: ReturnType<typeof summarizeShotPurposes>
   }
 
   return ["light comic background", "neutral ambience", "soft underscore loop"];
-}
-
-function getBgmPacingSuggestion(cameraShots: CameraShot[]) {
-  const averageDuration =
-    cameraShots.reduce((sum, shot) => sum + shot.durationMs, 0) /
-    Math.max(1, cameraShots.length);
-
-  if (averageDuration < 2200) {
-    return "Prefer short-loop music with low transient density so quick shots stay readable.";
-  }
-
-  if (averageDuration > 4000) {
-    return "Use a slow build or sustained bed that can hold through longer camera beats.";
-  }
-
-  return "Use a steady low-energy loop and let camera arrivals carry the rhythm.";
-}
-
-function getBgmPacingSearchTerms(cameraShots: CameraShot[]) {
-  const hasReveal = cameraShots.some(
-    (shot) => shot.shotPurpose === "reveal" || shot.shotPurpose === "establishing",
-  );
-
-  if (hasReveal) {
-    return ["slow reveal build", "subtle swell", "ambient transition bed"];
-  }
-
-  return ["low energy loop", "steady underscore", "light pacing bed"];
 }
 
 function createAiAudioSuggestionId(noteNumber: number) {
@@ -3999,6 +4070,25 @@ function isAiAudioSuggestionTargetAvailable(
 
 function appendUniqueWarning(warnings: string[], warning: string) {
   return warnings.includes(warning) ? warnings : [...warnings, warning];
+}
+
+function formatAiCameraSuggestionStatusLabel(status: AiCameraSuggestionStatus) {
+  switch (status) {
+    case "draft":
+      return "AI suggestion";
+    case "accepted":
+      return "Marked";
+    case "drafted":
+      return "Draft created";
+    case "rejected":
+      return "Rejected";
+    case "blocked":
+      return "Blocked";
+    case "stale":
+      return "Stale";
+    default:
+      return status;
+  }
 }
 
 function formatAiAudioSuggestionKind(kind: AiAudioSuggestionKind) {

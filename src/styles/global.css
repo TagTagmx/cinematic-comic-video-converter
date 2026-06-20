@@ -242,6 +242,7 @@ h2 {
 }
 
 .secondary-action {
+  max-width: 100%;
   min-height: 38px;
   padding: 9px 14px;
   border: 1px solid #2f6f8f;
@@ -250,6 +251,7 @@ h2 {
   color: #2f6f8f;
   cursor: pointer;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .secondary-action:hover,
@@ -271,6 +273,7 @@ h2 {
 }
 
 .primary-action {
+  max-width: 100%;
   min-height: 42px;
   padding: 11px 14px;
   border: 1px solid #285f7c;
@@ -279,6 +282,7 @@ h2 {
   color: #ffffff;
   cursor: pointer;
   font-weight: 800;
+  white-space: normal;
 }
 
 .primary-action:hover,
@@ -450,9 +454,10 @@ h2 {
 .image-metadata dd {
   min-width: 0;
   margin: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   color: #18222f;
   font-weight: 700;
+  word-break: normal;
 }
 
 .inspector-empty {
@@ -509,9 +514,10 @@ h2 {
 }
 
 .readonly-field strong {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   font-size: 0.9rem;
   font-weight: 700;
+  word-break: normal;
 }
 
 .coordinate-grid {
@@ -1023,7 +1029,8 @@ h2 {
 .ai-director-item-header strong,
 .ai-director-item p {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ai-director-item-header strong {
@@ -1050,7 +1057,7 @@ h2 {
 
 .ai-director-metadata {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   gap: 6px;
   margin: 0;
 }
@@ -1075,6 +1082,8 @@ h2 {
   color: #1d2a3a;
   font-size: 0.74rem;
   font-weight: 800;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ai-director-actions {
@@ -1148,7 +1157,8 @@ h2 {
 .ai-page-review p,
 .ai-page-review-group strong {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ai-page-review-header strong,
@@ -1231,8 +1241,9 @@ h2 {
   border-radius: 999px;
   background: #eef5fb;
   line-height: 1.25;
-  overflow-wrap: anywhere;
-  white-space: normal;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .ai-region-warning-badge {
@@ -1246,9 +1257,10 @@ h2 {
   font-size: 0.7rem;
   font-weight: 900;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   text-transform: uppercase;
-  white-space: normal;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .ai-region-card-detail {
@@ -1329,8 +1341,8 @@ h2 {
 }
 
 .ai-detail-card-actions button {
-  min-width: 0;
-  overflow-wrap: anywhere;
+  min-width: 82px;
+  white-space: nowrap;
 }
 
 .ai-detail-validation {
@@ -1390,18 +1402,57 @@ h2 {
   min-width: 0;
   color: #243142;
   font-size: 0.78rem;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestions-content {
   display: grid;
-  gap: 14px;
-  padding: 20px;
+  gap: 12px;
+  padding: 14px;
 }
 
 .ai-review-primary {
   display: grid;
   gap: 10px;
+}
+
+.ai-review-workflow-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ai-review-workflow-tabs span {
+  display: inline-flex;
+  flex: 1 1 72px;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid #d6dee7;
+  border-radius: 999px;
+  background: #f8fbff;
+}
+
+.ai-review-workflow-tabs strong,
+.ai-review-workflow-tabs small {
+  min-width: 0;
+  word-break: normal;
+}
+
+.ai-review-workflow-tabs strong {
+  color: #18222f;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.ai-review-workflow-tabs small {
+  color: #6a7a8a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .ai-review-section {
@@ -1411,8 +1462,13 @@ h2 {
   background: #ffffff;
 }
 
-.ai-review-section summary {
+.ai-review-section > summary {
+  display: flex;
+  min-height: 38px;
   min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   padding: 10px 12px;
   color: #18222f;
   cursor: pointer;
@@ -1420,7 +1476,19 @@ h2 {
   font-weight: 900;
 }
 
-.ai-review-section[open] summary {
+.ai-review-section > summary span,
+.ai-review-section > summary small {
+  min-width: 0;
+  word-break: normal;
+}
+
+.ai-review-section > summary small {
+  color: #6a7a8a;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.ai-review-section[open] > summary {
   border-bottom: 1px solid #e1e7ee;
 }
 
@@ -1439,6 +1507,23 @@ h2 {
 .suggestion-seed-actions {
   display: grid;
   gap: 10px;
+}
+
+.ai-review-toolbar {
+  display: grid;
+  gap: 8px;
+}
+
+.ai-review-section-intro {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.ai-review-section-intro p {
+  margin: 0;
+  color: #637487;
+  font-size: 0.84rem;
 }
 
 .ai-provider-director-content,
@@ -1475,8 +1560,8 @@ h2 {
 .ai-camera-suggestion-card {
   display: grid;
   min-width: 0;
-  gap: 10px;
-  padding: 12px;
+  gap: 8px;
+  padding: 10px;
   border: 1px solid #c8d8e8;
   border-radius: 6px;
   background: #ffffff;
@@ -1529,6 +1614,41 @@ h2 {
   min-width: 0;
 }
 
+.ai-camera-summary-row {
+  display: block;
+  min-width: 0;
+}
+
+.ai-camera-compact-reason {
+  margin: 0;
+  color: #455568;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.ai-director-metadata.is-compact {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 6px;
+}
+
+.ai-director-metadata.is-compact div {
+  padding: 6px 8px;
+}
+
+.suggestion-actions.is-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.suggestion-actions.is-compact button {
+  flex: 0 0 auto;
+  min-width: 68px;
+  white-space: nowrap;
+}
+
 .suggestion-type.is-review-accepted {
   background: #dcfce7;
   color: #166534;
@@ -1560,6 +1680,16 @@ h2 {
   color: #6f4d0f;
 }
 
+.suggestion-type.is-ai-camera {
+  background: #e7f4fb;
+  color: #285f7c;
+}
+
+.suggestion-type.is-draft-motion {
+  background: #fef3c7;
+  color: #7a4a0f;
+}
+
 .ai-audio-search-terms {
   display: grid;
   gap: 4px;
@@ -1578,7 +1708,8 @@ h2 {
 .ai-audio-search-terms span {
   color: #243142;
   font-size: 0.86rem;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ai-camera-target-list {
@@ -1605,7 +1736,8 @@ h2 {
 .ai-camera-target-list span,
 .ai-camera-target-list strong {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestion-list {
@@ -1616,6 +1748,10 @@ h2 {
   list-style: none;
 }
 
+.suggestion-list.is-draft-motion-list {
+  gap: 10px;
+}
+
 .suggestion-item {
   display: grid;
   gap: 12px;
@@ -1623,6 +1759,15 @@ h2 {
   border: 1px solid #d6dee7;
   border-radius: 6px;
   background: #f7f9fb;
+}
+
+.suggestion-item.is-draft-motion {
+  border-color: #e7c36b;
+  background: #fffaf0;
+}
+
+.ai-draft-motion-section {
+  border-color: #e7c36b;
 }
 
 .suggestion-item-main {
@@ -1635,7 +1780,8 @@ h2 {
 .suggestion-item-main small,
 .suggestion-item-main p {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestion-item-main strong {
@@ -1658,6 +1804,7 @@ h2 {
 .suggestion-type {
   width: fit-content;
   max-width: 100%;
+  flex: 0 0 auto;
   padding: 3px 7px;
   border-radius: 999px;
   background: #e0f2fe;
@@ -1665,9 +1812,10 @@ h2 {
   font-size: 0.7rem;
   font-weight: 800;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   text-transform: uppercase;
-  white-space: normal;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .suggestion-type.is-low-confidence-detail {
@@ -1682,7 +1830,7 @@ h2 {
 
 .suggestion-geometry {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
   gap: 6px;
   margin: 0;
 }
@@ -1709,7 +1857,8 @@ h2 {
   color: #18222f;
   font-size: 0.74rem;
   font-weight: 800;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestion-path-list {
@@ -1725,14 +1874,16 @@ h2 {
 .suggestion-path-list li {
   display: grid;
   gap: 3px;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestion-path-list strong,
 .suggestion-path-list span,
 .suggestion-path-list small {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .suggestion-path-list span {
@@ -1747,9 +1898,15 @@ h2 {
 }
 
 .suggestion-actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+.suggestion-actions button {
+  flex: 0 0 auto;
+  min-width: 82px;
+  white-space: nowrap;
 }
 
 .page-viewer-empty {
@@ -1911,6 +2068,7 @@ h2 {
 }
 
 .timeline-move-button {
+  max-width: 100%;
   min-width: 58px;
   min-height: 30px;
   padding: 6px 9px;
@@ -1921,6 +2079,7 @@ h2 {
   cursor: pointer;
   font-size: 0.78rem;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .timeline-move-button:not(:disabled):hover,
@@ -2295,5 +2454,16 @@ h2 {
   .inspector-form,
   .timeline-list {
     padding: 18px;
+  }
+
+  .ai-review-workflow-tabs,
+  .ai-review-toolbar,
+  .ai-camera-summary-row,
+  .ai-director-metadata.is-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .suggestion-actions.is-compact {
+    justify-items: start;
   }
 }

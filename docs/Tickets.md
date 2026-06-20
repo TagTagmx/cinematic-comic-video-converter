@@ -1,4 +1,4 @@
-﻿# Tickets
+# Tickets
 
 This file lists scoped implementation tickets.
 
@@ -36,7 +36,7 @@ Implemented changes:
 - Kept provider AI Director Suggestions separate from existing local Director Notes and existing helper drafts.
 - Preserved review-only behavior: no automatic Camera Shot creation, Focus Region creation, Shot Attention Path creation, accepted-state editing, Project JSON suggestion persistence, preview/export change, audio generation/fetching, SFX auto-placement, dialogue/narration, OCR, or panel-detection runtime.
 
-Historical next recommended ticket: T0094 - Detail Confidence Badge Color. T0094, T0095, T0096, T0097, T0098, T0099, T0100, T0100A, T0101, T0102, T0102A, T0103, T0104, T0105, T0106, T0106A, T0107, T0107A, T0107B, T0108, T0109, T0110, and T0111 have since been implemented. The current next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification. The earlier audio apply spike is deferred until the director rulebook path is grounded.
+Historical next recommended ticket: T0094 - Detail Confidence Badge Color. T0094, T0095, T0096, T0097, T0098, T0099, T0100, T0100A, T0101, T0102, T0102A, T0103, T0104, T0105, T0106, T0106A, T0107, T0107A, T0107B, T0108, T0109, T0110, and T0111 have since been implemented. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed. The earlier audio apply spike is deferred until the director rulebook path is grounded.
 
 ## Completed Implementation Ticket - T0092 AI Page Understanding Card-to-Page Highlighting
 
@@ -651,10 +651,10 @@ The current forward roadmap is:
 54. T0109 - Rulebook Evaluation Findings Tuning.
 55. T0110 - Practice Page Provider Evaluation Run.
 56. T0111 - Manual Provider Practice Run With User-Selected Pages.
-57. Next: T0112 - Browser Draft Motion and Audio Notes Practice Verification.
-
-Deferred UI follow-up:
-- T0099A - AI Camera Suggestion UI Rework is intentionally deferred. It should revisit the AI Camera Suggestions review layout, labels, and card ergonomics after the T0100 draft-motion flow has had manual testing, but it is not the current ticket.
+57. Completed: T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+58. Completed: T0112A - Audio Notes Simplicity Tuning.
+59. Completed: T0099A - AI Camera Suggestion UI Rework.
+60. Next: choose a new narrow follow-up from manual browser findings or continue with the next roadmap planning pass.
 
 Roadmap guardrails:
 - Do not treat older effect-first, panel, OCR/text, or fully automatic AI tickets as the immediate next step.
@@ -6929,7 +6929,7 @@ Manual verification:
 - Confirm accepted project data remains unchanged by analysis.
 - Run `npm.cmd run build`.
 
-Historical note: T0091 has been implemented, T0092 has since added card-to-page highlighting, T0093 has since added provider-backed director suggestion drafts, T0094 through T0097 have since completed and hardened the detail-correction bridge, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. The current next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0091 has been implemented, T0092 has since added card-to-page highlighting, T0093 has since added provider-backed director suggestion drafts, T0094 through T0097 have since completed and hardened the detail-correction bridge, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -6982,7 +6982,7 @@ Manual verification:
 - Confirm no accepted Camera Shots, Focus Regions, Shot Attention Paths, Project JSON, preview, export, audio, or SFX state changes.
 - Run `npm.cmd run build`.
 
-Historical note: T0092 has been implemented, T0093 has since added provider-backed director suggestion drafts, T0094 through T0097 have since completed and hardened the detail-correction bridge, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. The current next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0092 has been implemented, T0093 has since added provider-backed director suggestion drafts, T0094 through T0097 have since completed and hardened the detail-correction bridge, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -7094,7 +7094,7 @@ Manual verification:
 - Run AI page understanding, accept/reject details, rerun AI page understanding, and confirm accepted/manual detail data remains unchanged.
 - Run `npm.cmd run build`.
 
-Historical note: T0097 has been implemented, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. The current next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0097 has been implemented, T0098 has since planned the AI director suggestion contract, T0099 has since added the AI camera suggestion review surface, T0100 has since added the draft-motion bridge, T0100A has since stabilized Track v2 motion, T0101 has since added the practice fixture/evaluation checklist, T0102 has since tuned motion naturalness, T0102A has since added AI camera suggestion density guardrails, T0103 has since planned advisory audio/SFX notes, T0104 has since added the read-only audio notes UI, T0105 has since planned audio apply guardrails, T0106 has since planned Director Rulebook v1, T0106A has since repaired track-chain entry continuity, T0107 has since integrated the rulebook at runtime, T0108 has since completed the rulebook evaluation pass, T0109 has since tuned rulebook evaluation findings, T0110 has since recorded the provider evaluation-run limitation, and T0111 has since completed the provider-route practice run. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -7204,7 +7204,7 @@ Manual verification:
 - Run AI page understanding, correct detail highlights, generate/review camera suggestions, inspect linked targets, edit/reject suggestions, and confirm accepted project data remains unchanged.
 - Run `npm.cmd run build`.
 
-Historical note: T0099, T0100, T0100A, T0101, T0102, T0102A, T0103, T0104, T0105, T0106, T0106A, and T0107 have been implemented. The next recommended ticket is T0108 - Rulebook Evaluation Pass. T0099A is deferred as a later UI rework.
+Historical note: T0099, T0100, T0100A, T0101, T0102, T0102A, T0103, T0104, T0105, T0106, T0106A, T0107, T0112, T0112A, and T0099A have been implemented. Use the current status section for the next recommended ticket.
 
 ---
 
@@ -7212,21 +7212,37 @@ Historical note: T0099, T0100, T0100A, T0101, T0102, T0102A, T0103, T0104, T0105
 
 Ticket ID: T0099A
 
-Title: AI Camera Suggestion UI Rework
+Title: AI Camera Suggestion UI Rework / Responsive Simplification Pass
 
-Status: Deferred.
+Status: Implemented.
 
 Dependencies:
 - T0100
 
 Goal: Rework the AI Camera Suggestions review UI after the draft-motion flow has had manual testing.
 
-Scope note: This is intentionally not the current ticket. Future work should focus on review-card ergonomics, labels, layout density, and clearer separation between generated camera suggestions and temporary draft motion.
+Implemented changes:
+- Added a compact workflow strip inside AI Review that separates AI Page Understanding evidence, AI Camera Suggestions, Draft Motion helpers, and read-only Audio Notes.
+- Wrapped AI Page Understanding in an explicit raw-evidence section and kept AI Camera Suggestions in a separate temporary camera-suggestion section.
+- Reworked AI Camera Suggestion cards with shorter status labels, compact summary metadata, short `Draft` / `Reject` actions, and longer target/reason/warning details behind Inspect.
+- Split Draft Motion helpers out of the generic temporary helper list into a distinct temporary Draft Motion Helpers section with `Accept Draft` and `Reject Draft` actions.
+- Kept Audio Notes visually separate and documented as read-only advice.
+- Updated helper copy to clarify that camera suggestions and Draft Motion are temporary review data and accepted project objects are created only after explicit Draft Motion acceptance.
+- Preserved inspect/highlight behavior by keeping the existing target-inspection callbacks and accepted detail selection paths.
+- Added the responsive simplification pass after browser screenshots showed narrow-card problems: summary tiles are now compact count pills, section labels are short, the latest-analysis line is compact, camera cards show only title/status/motion/short reason/actions by default, long details are behind Inspect, and action rows wrap without shrinking buttons into unreadable fragments.
+- Removed narrow equal-column pressure and normal-word splitting from the AI Review card/pill styles so labels like Camera, Drafts, and Draft do not split into letter fragments at the current sidebar width.
 
 Non-goals:
 - No provider behavior changes.
 - No project data model changes.
 - No automatic accepted-state mutation.
+- No Project JSON schema changes.
+- No preview/export behavior changes.
+- No motion role, rulebook, OCR/panel detection, or audio apply behavior changes.
+
+Verification:
+- `npm.cmd run build` passes.
+- Browser manual verification should follow `docs/Manual_Verification_Guide.md` for T0099A.
 
 ---
 
@@ -7849,7 +7865,7 @@ Manual verification:
 - Confirm T0109 is the next recommended ticket.
 - Build is not required because this is docs-only.
 
-Historical note: T0108, T0109, T0110, and T0111 have been implemented. The next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0108, T0109, T0110, and T0111 have been implemented. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -7894,7 +7910,7 @@ Manual verification:
 - Review `docs/planning/Rulebook_Evaluation_Pass.md` and confirm the T0109 practice tuning note format is documentation-only.
 - Run `npm.cmd run build`.
 
-Historical note: T0109, T0110, and T0111 have been implemented. The next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0109, T0110, and T0111 have been implemented. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -7943,7 +7959,7 @@ Manual verification:
 - Confirm T0111 is the next recommended ticket.
 - Build is optional because this is docs-only.
 
-Historical note: T0110 and T0111 have been implemented. The next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0110 and T0111 have been implemented. T0112 - Browser Draft Motion and Audio Notes Practice Verification has since been completed.
 
 ---
 
@@ -7994,7 +8010,7 @@ Manual verification:
 - Confirm T0112 is the next recommended ticket.
 - Run `npm.cmd run build`.
 
-Historical note: T0111 has been implemented. The next recommended ticket is T0112 - Browser Draft Motion and Audio Notes Practice Verification.
+Historical note: T0111 has been implemented. T0112 has since completed browser/manual verification by user report, and T0112A has since tuned Audio Notes simplicity.
 
 ---
 
@@ -8004,7 +8020,7 @@ Ticket ID: T0112
 
 Title: Browser Draft Motion and Audio Notes Practice Verification
 
-Status: Planned.
+Status: Implemented. `docs/planning/Browser_Draft_Motion_Audio_Notes_Practice_Verification.md` records the initial bounded source/build verification pass, the agent browser-automation limitation, and the later user manual browser verification result. The user reported the workflow is good after T0112A audio-note simplification.
 
 Dependencies:
 - T0111
@@ -8025,6 +8041,66 @@ Non-goals:
 - No audio fetching, generation, downloading, automatic SFX placement, or audio apply behavior.
 - No OCR timing, parallax, character cutouts, segmentation animation, or new motion roles.
 
+Implemented changes:
+- Added `docs/planning/Browser_Draft_Motion_Audio_Notes_Practice_Verification.md`.
+- Confirmed the four T0111 practice images are present locally.
+- Reviewed the current AI Review source paths for provider AI Camera Suggestions, AI Page Understanding highlighting, temporary Draft Motion helpers, read-only Audio Notes, and stale/rejected/accepted-data boundaries.
+- Confirmed a bounded PowerShell job can start the Vite dev server locally.
+- Attempted dependency-free browser automation through local Chrome and Edge DevTools endpoints; Chrome exited before exposing a page target and Edge did not expose the expected localhost endpoint.
+- Recorded user manual browser verification as passing after T0112A audio-note simplification.
+
+Manual verification completed by user report:
+- Use the four supplied practice images in the browser UI.
+- Run AI Page Understanding and inspect AI Review card-to-page highlighting.
+- Generate AI Camera Suggestions and inspect/edit/reject representative cards.
+- Create temporary Draft Motion helpers and verify their overlays remain temporary until explicit acceptance.
+- Accept representative Draft Motion helpers and verify accepted Camera Shot, Focus Region, and Shot Attention Path data are created only through that explicit action.
+- Generate read-only Audio Notes from accepted camera context.
+- Export Project JSON/archive and confirm temporary AI review data is not persisted.
+- Run `npm.cmd run build`.
+
+---
+
+## T0112A - Audio Notes Simplicity Tuning
+
+Ticket ID: T0112A
+
+Title: Audio Notes Simplicity Tuning
+
+Status: Implemented.
+
+Dependencies:
+- T0104
+- T0107
+- T0112 manual feedback
+
+Goal: simplify read-only Audio Notes so BGM is one page-level recommendation and SFX notes stay sparse instead of suggesting a cue for every minor action or soft character movement.
+
+Scope note: This is a narrow deterministic audio-note tuning pass from browser/manual feedback. It changes only temporary advisory note generation; it does not create, fetch, place, persist, or apply audio assets.
+
+Allowed areas:
+- `src/app/App.tsx`
+- docs/
+
+Implemented changes:
+- Audio Notes now generate one whole-page BGM recommendation instead of separate BGM tone and BGM pacing cards.
+- Casual/dialogue-heavy pages now prefer soft peaceful daily-life BGM search terms such as gentle comic/family-comedy beds.
+- SFX note eligibility is stricter: explicit accepted effect cues still qualify, and non-effect SFX notes are limited to strong accepted action-impact beats.
+- Soft character entrances, ordinary dialogue, reaction faces, and normal detail inspection no longer automatically produce SFX cue notes.
+- Existing read-only/copy/reject behavior, stale handling, Project JSON/archive exclusion, provider routes, audio assets, Background Audio settings, SFX markers, preview/export behavior, OCR timing, parallax, cutouts, segmentation animation, and motion roles remain unchanged.
+
+Manual verification:
+- In the browser, accept at least one representative Draft Motion helper so Audio Notes can use accepted camera context.
+- Click `Generate Audio Notes`.
+- Confirm only one page-level BGM note appears for the whole page.
+- On a casual/family/daily-life comic page, confirm BGM suggests a soft peaceful daily-life/comedy bed rather than panel-by-panel scoring.
+- Confirm SFX notes are sparse and limited to explicit effect cues or strong action-impact beats.
+- Confirm soft character entrances, ordinary dialogue, and mild reaction/detail beats do not each create SFX notes.
+- Confirm notes remain temporary/read-only, copy/reject only, and no audio asset, Background Audio setting, SFX marker, Project JSON, archive, preview, or export data is changed.
+- Run `npm.cmd run build`.
+
+Historical note: T0112 and T0112A are implemented. No repeated browser-specific failure is currently documented.
+
 ---
 
 ## Deferred - Existing Audio Suggestion Apply Spike
@@ -8032,4 +8108,3 @@ Non-goals:
 Status: Deferred.
 
 Reason: Audio apply remains valid later, but the current recommended path is to ground camera/audio suggestions in a Director Rulebook first. When resumed, this work should apply only validated settings to an existing Background Audio record or an existing SFX marker. It must not create, fetch, download, upload, generate, bundle, or place audio assets or new SFX markers. It must not persist temporary audio suggestions unless a separate schema ticket explicitly scopes it.
-
